@@ -1,0 +1,254 @@
+// * compatibility v0.1.12
+// Compatibility with plugins and Themes
+@use 'mixins' as * ;
+
+// - Hide Channels by Farcrada (v2.2.12)
+// - MemberCount by Arashiryuu (v2.2.22)
+// - FriendNotifications by DevilBro (v2.0.0)
+// - ReadAllNotificationsButton by DevilBro (v1.7.7)
+// - SpotifyControls by DevilBro (v1.4.0)
+// - CollapsibleUI by programmer2514 (v8.4.5)
+// - ServerDetails by DevilBro (v1.2.0)
+// - CharCounter by DevilBro (v1.6.6)
+// - Memessages by Greezor (v0.13.2)
+
+// - Icon Revert 2023 by davart154 (e28cad5)
+
+
+// -> Hide Channels by Farcrada
+// Show/Hide btn
+#toggleChannels {
+  filter: brightness(.6);
+  margin-right: 6px ;
+  
+  &.channelsHidden { filter: brightness(.8) }
+  
+  &:hover { filter: brightness(1) }
+}
+
+// Server channel sidebar
+.sidebar_a4d4d9 {
+  transition: none !important ;
+  
+  // Sidebar hidden 
+  &.hideChannelElement {
+
+    // titlebar (chat, friendslist)
+    + div .title_a7d72e, + main .container_fc4f04 {
+      margin-left: 240px ;
+      width: auto ;
+    }
+  }
+}
+// <- Hide Channels by Farcrada
+
+// -> MemberCount by Arashiryuu
+#MemberCount {
+  background: none ;
+
+  + .members_cbd271 {
+    margin-top: 40px ;
+  }
+}
+// <- MemberCount by Arashiryuu
+
+// -> FriendNotifications by DevilBro
+// Online friend counter
+.guilds_a4d4d9 .friendsOnlineWrap_0gZ63m {
+  display: flex !important ;
+  position: absolute ;
+  transform: rotate(90deg);
+  top: 60px ;
+  left: -19px ;
+  z-index: 1 ;
+
+  .label_2wRs_g {
+    color: var(--text-normal);
+    font-size: 10px ;
+
+    @include shadow_effect("text_1");
+  }
+}
+// <- FriendNotifications by DevilBro
+
+// -> ReadAllNotificationsButton by DevilBro
+// "Read all" btn
+.guilds_a4d4d9 .frame_oXWS21 {
+  display: flex !important ;
+  position: absolute ;
+  top: 0 ;
+  left: -16px ;
+  z-index: 1 ;
+
+  &, * { height: 20px ; width: 20px  }
+
+  .childWrapper_f90abb {
+    color: transparent ;
+    background: none ;
+    transform: rotate(90deg);
+    text-align: center ;
+
+    // "R" Icon
+    &:before {
+      content: "R" ;
+      position: absolute ;
+      top: 0 ;
+      left: 0 ;
+      height: 20px ;
+      width: 20px ;
+      line-height: 20px ;
+      color: var(--header-secondary);
+      font-size: 18px ;
+      font-weight: 700 ;
+
+      @include shadow_effect("text_2");
+    }
+
+    // Tooltip on hover
+    &:hover::after {
+      content: "read all" ;
+      position: absolute ;
+      top: -10px ;
+      left: 25px ;
+      padding: 8px 12px ;
+      font-size: 16px ;
+      font-weight: 600 ;
+      line-height: 10px ;
+      background: var(--background-tertiary);
+      color: var(--text-normal);
+      border-radius: 5px ;
+      white-space: nowrap ;
+
+      @include shadow_effect("box_2");
+    }
+  }
+}
+// <- ReadAllNotificationsButton by DevilBro
+
+// -> SpotifyControls by DevilBro
+// Sidebar control panel
+#app-mount .panels_a4d4d9 .container_6sXIoE { 
+  margin: 0px ;
+  min-height: 44px ;
+
+  .button_f67531 { background: none }
+}
+// <- SpotifyControls by DevilBro
+
+// -> CollapsibleUI by programmer2514
+// Serverbar hidden
+.guilds_a4d4d9 {
+  
+  &[style*="transition: width"] {
+    transition: none !important ;
+  }
+  
+  // prevent hover
+  &[style*="width: 0px;"] {
+    display: none ;
+    
+    // hide Home search, Server options btn
+    + .base_a4d4d9 {
+      .searchBar_f0963d, .container_fd6364 {
+        display: none ;
+      }
+    }
+  }
+}
+
+// Channel list sidebar floating (on hover)
+.sidebar_a4d4d9[style*="position: absolute"] {
+  overflow: visible !important ;
+
+  // hidden
+  &[style*="width: 0px;"] {
+    overflow: hidden !important ;
+  }
+
+  &:before {
+    content: "";
+    position: absolute ;
+    height: 100% ;
+    width: 100% ;
+    background: var(--background_app) rgba(0, 0, 0, .1);
+    background-blend-mode: overlay ;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    
+    --blur: blur(calc(var(--backgroundBlur_app, 0) / 100 * 1px));
+    --brightness: brightness(calc((var(--backgroundBrightness_app, 80) / 100)));
+
+    filter: var(--blur) var(--brightness);
+
+    @include shadow_effect("box_2");
+  }
+}
+
+// User area hidden
+// user panel, voice panel, ...
+.panels_a4d4d9[style*="max-height: 0px"] {
+  display: none ;
+}
+
+// DM Sidebar, Channel list
+:is(.privateChannels_f0963d, .container_ee69e0):has(~ .panels_a4d4d9[style*="max-height: 0px"]) {
+  top: 5px ;
+  margin-bottom: unset ;
+}
+// <- CollapsibleUI by programmer2514
+
+// -> ServerDetails by DevilBro
+// make tooltip top center
+.detailsTooltip_G9hSSa {
+  transform: translate(-195px, -50px);
+}
+// <- ServerDetails by DevilBro
+
+// -> CharCounter by DevilBro
+.charCounterAdded_zz9O4t {
+
+  .charCounter_7fw40k {
+    position: absolute ;
+    top: 0px ;
+    left: 58px ;
+    height: 15px ;
+    width: fit-content ;
+    line-height: 15px ;
+    color: var(--channel-text-area-placeholder);
+  }
+
+  .placeholder_a552a6, .editor_a552a6 {
+    padding: 14px 10px 8px 0 ;
+  }
+}
+
+// typing/slowmode container
+.form_a7d72e .typing_d7ebeb {
+  margin: 0 !important ;
+}
+// <- CharCounter by DevilBro
+
+// -> Memessages by Greezor
+// Main container open
+.memessages--sidebar.open {
+  position: static ;
+}
+
+// pin button, bc. pin breaks (yes this is lazy)
+.memessages--sidebar--pin { display: none }
+// <- Memessages by Greezor
+
+
+// -> Icon Revert 2023
+
+// Channel Notification settings Bell icon
+.toolbar_fc4f04 [d^="M1.3 21.3a1 1 0 1 0 1.4 1.4l20-20a1 1 0 0 0-1.4-1.4l-20 20ZM3.13 16.13c.11.27.46.28.66.08L15.73 4.27a.47.47 0 0 0-.07-"] {
+  d: path("M21.178 1.70703L22.592 3.12103L4.12103 21.593L2.70703 20.178L21.178 1.70703Z M18 10.5283L10.5287 18H21V17C19.344 17 18 15.657 18 14V10.5283Z M8.957 19.5718L9.52877 19H15.4449C14.7519 20.19 13.4759 21 11.9999 21C10.7748 21 9.68752 20.442 8.957 19.5718Z M12 3C13.417 3 14.71 3.5 15.734 4.321L5.99805 14.058C5.99805 14.0479 5.99856 14.038 5.99907 14.0283C5.99956 14.0188 6.00005 14.0094 6.00005 14V9C6.00005 5.686 8.68605 3 12 3Z") !important ;
+}
+
+.toolbar_fc4f04 .icon_fc4f04:has([d^="M1.3 21.3a1 1 0 1 0 1.4 1.4l20-20a1 1 0 0 0-1.4-1.4l-20 20ZM3.13 16.13c.11.27.46.28.66.08L15.73 4.27a."]) {
+  background-image: none !important ;
+}
+// <- Icon Revert 2023
